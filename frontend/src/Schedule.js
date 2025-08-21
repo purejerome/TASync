@@ -212,6 +212,7 @@ const Overview = () => {
     try {
       const shifts = await fetchUserShifts(userId);
       console.log(`Fetched shifts for user ID ${userId}:`, shifts);
+      // console.log(dayOfWeekMap[shift.day_of_week]);
       const newEvents = shifts.map((shift) => ({
         Id: shift.id,
         Subject: `${shift.schedule?.subject?.name || "Unknown Subject"}`,
@@ -225,6 +226,10 @@ const Overview = () => {
         CalendarId: 1,
         RecurrenceRule: `FREQ=WEEKLY;BYDAY=${dayOfWeekMap[shift.day_of_week]}`, // Dynamically set recurrence rule
       }));
+      for (const shift of shifts) {
+        console.log(shift.day_of_week);
+        console.log(dayOfWeekMap[shift.day_of_week]);
+      }
       setEvents((prevEvents) => [...prevEvents, ...newEvents]);
       console.log(
         `Updated events after adding shifts for user ID ${userId}:`,
